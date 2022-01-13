@@ -15,23 +15,23 @@ const substitutionModule = (function () {
           }
         }
       }
-      const trueAlphabet = 'abcdefghijklmnopqrstuvwxyz';
+      const trueAlphabet = 'abcdefghijklmnopqrstuvwxyz'; // set true alphabet var
       const message = [];
       if (encode) {
-        for (let i = 0; i < 26; i++) {
-          message[trueAlphabet[i]] = alphabet[i]
+        for (let i = 0; i < 26; i++) {   //loops through alphabet
+          message[trueAlphabet[i]] = alphabet[i]  //sets the true alphabet index to equal the input alphabet index
         }
       }
-      else {
+      else {  //else we decode
         for (let i = 0; i < 26; i++) {
-          message[alphabet[i]] = trueAlphabet[i];
+          message[alphabet[i]] = trueAlphabet[i]; //sets the input alphabet index to queal the true alphabet index
         }
       }
-      const result = input.toLowerCase().split("").map(letter => {
-        if (letter === " ") return " ";
+      const result = input.toLowerCase().split("").map(letter => { 
+        if (letter === " ") return " "; //checks for spaces
         return message[letter];
       })
-      return result.join("");
+      return result.join("");  //returns completed message returned as string
     }
 
   return {
