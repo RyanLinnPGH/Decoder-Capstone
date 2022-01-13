@@ -5,8 +5,8 @@
 
 const polybiusModule = (function () {
   function polybius(input, encode = true) {
-    //create our polybius square collection
-    const polybiusSquare = {
+    
+    const polybiusSquare = {                      //create our polybius square obj
       1: { 1: 'a', 2: 'b', 3: 'c', 4: 'd', 5: 'e'},
       2: { 1: 'f', 2: 'g', 3: 'h', 4: 'i/j', 5: 'k'},
       3: { 1: 'l', 2: 'm', 3: 'n', 4: 'o', 5: 'p'},
@@ -14,33 +14,33 @@ const polybiusModule = (function () {
       5: { 1: 'v', 2: 'w', 3: 'x', 4: 'y', 5: 'z'},
     };
 
-    const message = input.toLowerCase().split(''); //our input -> individual char array
+    const message = input.toLowerCase().split(''); //input to array
     const messageNoSpaces = message.filter(nums => nums != ' '); //our array  without spaces
     if(!encode){ //then we decode
-      let decodeString = '';
-      if(messageNoSpaces.length % 2 != 0) return false; //a copy of our array without spaces to check if there are an odd number of numbers
+      let decodeMessage = '';
+      if(messageNoSpaces.length % 2 != 0) return false; //checks for even amount of characters
       for(let index = 0; index < message.length; index += 2){
-        //[column][row] format
-        if(message[index] === ' '){ //if theres a space in the input add it to our decodeString
-          decodeString += ' ';
+        
+        if(message[index] === ' '){ //if theres a space in the input add it to our decodeMessage
+          decodeMessage += ' ';
           index--; //reset index a space since our value was a space
-        }else{ decodeString += polybiusSquare[message[index + 1]][message[index]]; } //decode
+        }else{ decodeMessage += polybiusSquare[message[index + 1]][message[index]]; } //decode
       }
-      return decodeString;
+      return decodeMessage;
     }else{ //else we encode
-      const buildEncryption = [];
-      for(let letter of message){ //for each letter we will find the key/value pair by:
-        if(letter === ' '){ buildEncryption.push(' '); } //keep our spaces
+      const encodeMessage = [];
+      for(let letter of message){ //checking each letter individually
+        if(letter === ' '){ encodeMessage.push(' '); } //save spaces
         for(let c = 1; c < 6; c++){ //cycling each column
           for(let i = 1; i < 6; i++){ //cycling each row
-            if(polybiusSquare[c][i].includes(letter)){
-              buildEncryption.push(i);
-              buildEncryption.push(c);
+            if(polybiusSquare[c][i].includes(letter)){  //checks if the column/row is equal to letter being looped
+              encodeMessage.push(i);
+              encodeMessage.push(c);//push column/row combo
             } 
           }
         }
       }
-      return buildEncryption.join('');
+      return encodeMessage.join('');
     }
   }
 
